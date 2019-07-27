@@ -16,6 +16,7 @@
     "parcel": "1.12.3",
     "react": "16.8.6",
     "react-dom": "16.8.6",
+    "react-point": "^3.0.1",
     "tailwindcss": "^1.0.5"
   },
   "devDependencies": {
@@ -46,6 +47,7 @@
     "@babel/plugin-transform-runtime": "^7.5.0",
     "@babel/preset-env": "7.5.4",
     "@babel/preset-react": "7.0.0",
+    "@testing-library/react": "^8.0.5",
     "babel-eslint": "10.0.2",
     "babel-plugin-static-fs": "1.2.0",
     "babel-plugin-stylus-compiler": "1.4.0",
@@ -58,7 +60,6 @@
     "eslint-plugin-jsx-a11y": "6.2.3",
     "eslint-plugin-react": "7.14.2",
     "jest": "^24.8.0",
-    "@testing-library/react": "^8.0.5",
     "sinon": "7.3.2"
   }
 }
