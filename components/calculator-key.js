@@ -1,5 +1,4 @@
 import React from 'react';
-import PointTarget from 'react-point';
 
 const CalculatorKey = ({ onPress, className, ...props }) => (
   <button
