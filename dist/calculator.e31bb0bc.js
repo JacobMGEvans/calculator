@@ -25883,17 +25883,21 @@ var AutoScalingText = function AutoScalingText(props) {
       setScale = _useState2[1];
 
   var node = (0, _react.useRef)(null);
-  (0, _react.useEffect)(function () {
+
+  var handleChange = function handleChange() {
     var parentNode = node.current;
-    var availableWidth = parentNode.offsetWidth;
-    var actualWidth = node.offsetWidth;
-    console.log(parentNode, 'Parent');
-    console.log(actualWidth, 'WIDTH');
-    var actualScale = availableWidth / actualWidth;
+    var actualScale; // const availableWidth = parentNode.offsetWidth;
+    // const actualWidth = node.offsetWidth;
+    // console.log(parentNode, 'Parent');
+    // console.log(actualWidth, 'WIDTH');
+    // const actualScale = availableWidth / actualWidth;
+
     if (scale === actualScale) return;
     actualScale < 1 ? setScale(actualScale) : scale < 1 ? setScale(1) : console.error(actualScale, 'actualscale', scale, 'scale', parentNode, 'ParentNode');
-  });
+  };
+
   return _react.default.createElement("div", {
+    onChange: handleChange,
     className: "auto-scaling-text",
     style: {
       transform: "scale(".concat(scale, ",").concat(scale, ")")

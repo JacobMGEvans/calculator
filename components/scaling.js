@@ -4,14 +4,14 @@ const AutoScalingText = props => {
   const [scale, setScale] = useState(1);
   const node = useRef(null);
 
-  useEffect(() => {
+  const handleChange = () => {
     const parentNode = node.current;
-
-    const availableWidth = parentNode.offsetWidth;
-    const actualWidth = node.offsetWidth;
-    console.log(parentNode, 'Parent');
-    console.log(actualWidth, 'WIDTH');
-    const actualScale = availableWidth / actualWidth;
+    let actualScale;
+    // const availableWidth = parentNode.offsetWidth;
+    // const actualWidth = node.offsetWidth;
+    // console.log(parentNode, 'Parent');
+    // console.log(actualWidth, 'WIDTH');
+    // const actualScale = availableWidth / actualWidth;
 
     if (scale === actualScale) return;
 
@@ -27,10 +27,11 @@ const AutoScalingText = props => {
           parentNode,
           'ParentNode'
         );
-  });
+  };
 
   return (
     <div
+      onChange={handleChange}
       className="auto-scaling-text"
       style={{ transform: `scale(${scale},${scale})` }}
       ref={node}>
