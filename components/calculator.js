@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import CalculatorDisplay from './calcDisplay';
-import CalculatorKey from './calcKey';
+import CalculatorDisplay from './calculator-display';
+import CalculatorKey from './calculator-key';
 
 const CalculatorOperations = {
   '/': (prevValue, nextValue) => prevValue / nextValue,
