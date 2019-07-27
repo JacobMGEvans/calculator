@@ -6,12 +6,9 @@ const AutoScalingText = props => {
 
   const handleChange = () => {
     const parentNode = node.current;
-    let actualScale;
-    // const availableWidth = parentNode.offsetWidth;
-    // const actualWidth = node.offsetWidth;
-    // console.log(parentNode, 'Parent');
-    // console.log(actualWidth, 'WIDTH');
-    // const actualScale = availableWidth / actualWidth;
+    const availableWidth = parentNode.offsetWidth;
+    const actualWidth = node.offsetWidth;
+    const actualScale = availableWidth / actualWidth;
 
     if (scale === actualScale) return;
 

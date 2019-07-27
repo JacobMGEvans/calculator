@@ -1,5 +1,5 @@
 import React from 'react';
-import { AutoScalingText } from './scaling';
+import AutoScalingText from './scaling';
 
 const CalculatorDisplay = ({ value, ...props }) => {
   const language = navigator.language || 'en-US';

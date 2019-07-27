@@ -25886,12 +25886,9 @@ var AutoScalingText = function AutoScalingText(props) {
 
   var handleChange = function handleChange() {
     var parentNode = node.current;
-    var actualScale; // const availableWidth = parentNode.offsetWidth;
-    // const actualWidth = node.offsetWidth;
-    // console.log(parentNode, 'Parent');
-    // console.log(actualWidth, 'WIDTH');
-    // const actualScale = availableWidth / actualWidth;
-
+    var availableWidth = parentNode.offsetWidth;
+    var actualWidth = node.offsetWidth;
+    var actualScale = availableWidth / actualWidth;
     if (scale === actualScale) return;
     actualScale < 1 ? setScale(actualScale) : scale < 1 ? setScale(1) : console.error(actualScale, 'actualscale', scale, 'scale', parentNode, 'ParentNode');
   };
@@ -25922,7 +25919,7 @@ var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/h
 
 var _react = _interopRequireDefault(require("react"));
 
-var _scaling = require("./scaling");
+var _scaling = _interopRequireDefault(require("./scaling"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25939,7 +25936,7 @@ var CalculatorDisplay = function CalculatorDisplay(_ref) {
   if (match) formattedValue += /[1-9]/.test(match[0]) ? match[1] : match[0];
   return _react.default.createElement("div", (0, _extends2.default)({}, props, {
     className: "calculator-display"
-  }), _react.default.createElement(_scaling.AutoScalingText, null, formattedValue));
+  }), _react.default.createElement(_scaling.default, null, formattedValue));
 };
 
 var _default = CalculatorDisplay;
