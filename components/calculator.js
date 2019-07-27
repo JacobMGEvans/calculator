@@ -10,7 +10,7 @@ const CalculatorOperations = {
   '=': (prevValue, nextValue) => nextValue
 };
 
-const Calculator = prop => {
+const Calculator = () => {
   const [value, setValue] = useState(null);
   const [displayValue, setDisplayValue] = useState('0');
   const [operator, setOperator] = useState(null);
@@ -78,7 +78,6 @@ const Calculator = prop => {
 
   const handleKeyDown = event => {
     let { key } = event;
-
     if (key === 'Enter') key = '=';
 
     let expr = /\d/.test(key);

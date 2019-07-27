@@ -7,7 +7,6 @@ const CalculatorDisplay = ({ value, ...props }) => {
     useGrouping: true,
     maximumFractionDigits: 6
   });
-
   // Add back missing .0 in e.g. 12.0
   const match = value.match(/\.\d*?(0*)$/);
 

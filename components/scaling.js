@@ -1,39 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-export class AutoScalingText extends React.Component {
-  state = {
-    scale: 1
-  };
+const AutoScalingText = props => {
+  const [scale, setScale] = useState(1);
+  const node = useRef(null);
 
-  componentDidUpdate() {
-    const { scale } = this.state;
-
-    const node = this.node;
-    const parentNode = node.parentNode;
+  useEffect(() => {
+    const parentNode = node.current;
 
     const availableWidth = parentNode.offsetWidth;
     const actualWidth = node.offsetWidth;
+    console.log(parentNode, 'Parent');
+    console.log(actualWidth, 'WIDTH');
     const actualScale = availableWidth / actualWidth;
 
     if (scale === actualScale) return;
 
-    if (actualScale < 1) {
-      this.setState({ scale: actualScale });
-    } else if (scale < 1) {
-      this.setState({ scale: 1 });
-    }
-  }
+    actualScale < 1
+      ? setScale(actualScale)
+      : scale < 1
+      ? setScale(1)
+      : console.error(
+          actualScale,
+          'actualscale',
+          scale,
+          'scale',
+          parentNode,
+          'ParentNode'
+        );
+  });
 
-  render() {
-    const { scale } = this.state;
-
-    return (
-      <div
-        className="auto-scaling-text"
-        style={{ transform: `scale(${scale},${scale})` }}
-        ref={node => (this.node = node)}>
-        {this.props.children}
-      </div>
-    );
-  }
-}
+  return (
+    <div
+      className="auto-scaling-text"
+      style={{ transform: `scale(${scale},${scale})` }}
+      ref={node}>
+      {props.children}
+    </div>
+  );
+};
+export default AutoScalingText;
