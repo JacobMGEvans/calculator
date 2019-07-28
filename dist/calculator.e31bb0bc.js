@@ -26097,10 +26097,9 @@ var Calculator = function Calculator() {
   var handleKeyDown = function handleKeyDown(event) {
     var key = event.key;
     if (key === 'Enter') key = '=';
-    var expr = /\d/.test(key);
 
-    switch (expr) {
-      case expr in CalculatorOperations:
+    switch (key) {
+      case CalculatorOperations[key]:
         event.preventDefault();
         performOperation(key);
         break;
@@ -26128,7 +26127,6 @@ var Calculator = function Calculator() {
       default:
         event.preventDefault();
         inputDigit(parseInt(key, 10));
-        displayValue !== '0' ? clearDisplay() : clearAll();
     }
   };
 

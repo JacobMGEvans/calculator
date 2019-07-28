@@ -80,10 +80,8 @@ const Calculator = () => {
     let { key } = event;
     if (key === 'Enter') key = '=';
 
-    let expr = /\d/.test(key);
-
-    switch (expr) {
-      case expr in CalculatorOperations:
+    switch (key) {
+      case CalculatorOperations[key]:
         event.preventDefault();
         performOperation(key);
         break;
@@ -106,8 +104,6 @@ const Calculator = () => {
       default:
         event.preventDefault();
         inputDigit(parseInt(key, 10));
-
-        displayValue !== '0' ? clearDisplay() : clearAll();
     }
   };
 
