@@ -25883,6 +25883,7 @@ var AutoScalingText = function AutoScalingText(props) {
       setScale = _useState2[1];
 
   var node = (0, _react.useRef)(null);
+  console.log(node, 'NODE');
 
   var handleChange = function handleChange() {
     var parentNode = node.current;
@@ -25893,8 +25894,13 @@ var AutoScalingText = function AutoScalingText(props) {
     actualScale < 1 ? setScale(actualScale) : scale < 1 ? setScale(1) : console.error(actualScale, 'actualscale', scale, 'scale', parentNode, 'ParentNode');
   };
 
+  (0, _react.useEffect)(function () {
+    handleChange();
+    return function () {
+      return handleChange();
+    };
+  }, [node]);
   return _react.default.createElement("div", {
-    onChange: handleChange,
     className: "auto-scaling-text",
     style: {
       transform: "scale(".concat(scale, ",").concat(scale, ")")
@@ -26116,6 +26122,7 @@ var Calculator = function Calculator() {
 
       case 'Clear':
         event.preventDefault();
+        clearDisplay();
         break;
 
       default:
@@ -26361,7 +26368,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60715" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56104" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

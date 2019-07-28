@@ -101,6 +101,7 @@ const Calculator = () => {
         break;
       case 'Clear':
         event.preventDefault();
+        clearDisplay();
         break;
       default:
         event.preventDefault();
