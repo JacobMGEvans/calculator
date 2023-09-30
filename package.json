@@ -3,15 +3,15 @@
   "version": "2.0.0",
   "main": "index.tsx",
   "scripts": {
-    "start": "node dist/server/server.mjs",
+    "start": "bun server.ts",
     "watch": "vite watch index.html",
-    "build:client": "vite build --outDir dist/client --ssrManifest ./src",
-    "build:server": "vite build --outDir dist/server --ssr ./server.ts",
+    "build": "vite build --outDir dist/",
     "eslint": "eslint --ext .ts,.tsx ."
   },
   "license": "MIT",
   "dependencies": {
     "@fastify/static": "^6.11.2",
+    "bun": "^1.0.3",
     "fastify": "^4.23.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
