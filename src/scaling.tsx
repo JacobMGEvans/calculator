@@ -1,30 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, PropsWithChildren } from "react";
 
-const AutoScalingText = props => {
+export function AutoScalingText(props: PropsWithChildren) {
   const [scale, setScale] = useState(1);
-  const node = useRef(null);
+  const node = useRef<HTMLElement | undefined>();
 
-  console.log(node, 'NODE');
   const handleChange = () => {
-    const parentNode = node.current;
-    const availableWidth = parentNode.offsetWidth;
-    const actualWidth = node.offsetWidth;
-    const actualScale = availableWidth / actualWidth;
+    if (node.current === undefined) return;
 
-    if (scale === actualScale) return;
+    const scale = node.current;
+    const parentNode = scale.parentNode as HTMLElement | null;
+    if (parentNode === null) return;
 
-    actualScale < 1
-      ? setScale(actualScale)
-      : scale < 1
-      ? setScale(1)
-      : console.error(
-          actualScale,
-          'actualscale',
-          scale,
-          'scale',
-          parentNode,
-          'ParentNode'
-        );
+    const actualWidth = scale.scrollWidth;
+    const actualHeight = scale.scrollHeight;
+    const maxWidth = window.innerWidth;
+    const maxHeight = window.innerHeight;
+
+    const nextScale =
+      Math.min(maxWidth / actualWidth, maxHeight / actualHeight, 1) * 0.9;
+
+    setScale(nextScale);
   };
 
   useEffect(() => {
@@ -36,9 +31,9 @@ const AutoScalingText = props => {
     <div
       className="auto-scaling-text"
       style={{ transform: `scale(${scale},${scale})` }}
-      ref={node}>
+      ref={(node) => node}
+    >
       {props.children}
     </div>
   );
-};
-export default AutoScalingText;
+}

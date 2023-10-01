@@ -1,11 +1,18 @@
-import React from 'react';
+import { PropsWithChildren } from "react";
 
-const CalculatorKey = ({ onPress, className, ...props }) => (
+type CalculatorKeyProps = {
+  onPress: () => void;
+  className?: string;
+};
+
+export const CalculatorKey = ({
+  onPress,
+  className,
+  ...props
+}: PropsWithChildren & CalculatorKeyProps) => (
   <button
     onClick={onPress}
     className={`calculator-key ${className}`}
     {...props}
   />
 );
-
-export default CalculatorKey;

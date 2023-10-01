@@ -1,11 +1,14 @@
-import React from 'react';
-import AutoScalingText from './scaling';
+import { PropsWithChildren } from "react";
+import { AutoScalingText } from "./scaling";
 
-const CalculatorDisplay = ({ value, ...props }) => {
-  const language = navigator.language || 'en-US';
+export function CalculatorDisplay({
+  value,
+  ...props
+}: PropsWithChildren & { value: string }) {
+  const language = navigator.language || "en-US";
   let formattedValue = parseFloat(value).toLocaleString(language, {
     useGrouping: true,
-    maximumFractionDigits: 6
+    maximumFractionDigits: 6,
   });
   // Add back missing .0 in e.g. 12.0
   const match = value.match(/\.\d*?(0*)$/);
@@ -17,6 +20,4 @@ const CalculatorDisplay = ({ value, ...props }) => {
       <AutoScalingText>{formattedValue}</AutoScalingText>
     </div>
   );
-};
-
-export default CalculatorDisplay;
+}

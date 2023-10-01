@@ -1,32 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import CalculatorDisplay from './calculator-display';
-import CalculatorKey from './calculator-key';
+import { useState, useEffect } from "react";
+import { CalculatorDisplay } from "./calculator-display";
+import { CalculatorKey } from "./calculator-key";
 
-const CalculatorOperations = {
-  '/': (prevValue, nextValue) => prevValue / nextValue,
-  '*': (prevValue, nextValue) => prevValue * nextValue,
-  '+': (prevValue, nextValue) => prevValue + nextValue,
-  '-': (prevValue, nextValue) => prevValue - nextValue,
-  '=': (prevValue, nextValue) => nextValue
+interface CalculatorOperations {
+  [key: string]: (prevValue: number, nextValue: number) => string;
+}
+const CalculatorOperations: CalculatorOperations = {
+  "/": (prevValue: number, nextValue: number): string =>
+    (prevValue / nextValue).toString(),
+  "*": (prevValue: number, nextValue: number): string =>
+    (prevValue * nextValue).toString(),
+  "+": (prevValue: number, nextValue: number): string =>
+    (prevValue + nextValue).toString(),
+  "-": (prevValue: number, nextValue: number): string =>
+    (prevValue - nextValue).toString(),
+  "=": (_: number, nextValue: number): string => nextValue.toString(),
 };
 
 const Calculator = () => {
-  const [value, setValue] = useState(null);
-  const [displayValue, setDisplayValue] = useState('0');
-  const [operator, setOperator] = useState(null);
+  const [value, setValue] = useState<string | null>(null);
+  const [displayValue, setDisplayValue] = useState("0");
+  const [operator, setOperator] = useState<string | null>(null);
   const [waitingForOperand, setWaitingOperand] = useState(false);
 
   const clearAll = () => {
     setValue(null);
-    setDisplayValue('0');
+    setDisplayValue("0");
     setOperator(null);
     setWaitingOperand(false);
   };
 
-  const clearDisplay = () => setDisplayValue('0');
+  const clearDisplay = () => setDisplayValue("0");
 
   const clearLastChar = () => {
-    setDisplayValue(displayValue.substring(0, displayValue.length - 1) || '0');
+    setDisplayValue(displayValue.substring(0, displayValue.length - 1) || "0");
   };
 
   const toggleSign = () => {
@@ -38,7 +45,7 @@ const Calculator = () => {
     const currentValue = parseFloat(displayValue);
     if (currentValue === 0) return;
 
-    const fixedDigits = displayValue.replace(/^-?\d*\.?/, '');
+    const fixedDigits = displayValue.replace(/^-?\d*\.?/, "");
     const newValue = parseFloat(displayValue) / 100;
 
     setDisplayValue(String(newValue.toFixed(fixedDigits.length + 2)));
@@ -46,29 +53,31 @@ const Calculator = () => {
 
   const inputDot = () => {
     if (!/\./.test(displayValue)) {
-      setDisplayValue(displayValue + '.');
+      setDisplayValue(displayValue + ".");
       setWaitingOperand(false);
     }
   };
 
-  const inputDigit = digit => {
+  const inputDigit = (digit: number) => {
     if (waitingForOperand) {
       setDisplayValue(String(digit));
       setWaitingOperand(false);
     } else {
       setDisplayValue(
-        displayValue === '0' ? String(digit) : displayValue + digit
+        displayValue === "0" ? String(digit) : displayValue + digit
       );
     }
   };
 
-  const performOperation = nextOperator => {
-    const inputValue = parseFloat(displayValue);
-    if (value == null) {
-      setValue(inputValue);
+  const performOperation = (nextOperator: string) => {
+    if (value === null) {
+      setValue(displayValue);
     } else if (operator) {
-      const currentValue = value || 0;
-      const newValue = CalculatorOperations[operator](currentValue, inputValue);
+      const currentValue = parseFloat(value);
+      const newValue = CalculatorOperations[operator](
+        currentValue,
+        parseFloat(displayValue)
+      );
       setValue(newValue);
       setDisplayValue(String(newValue));
     }
@@ -76,28 +85,32 @@ const Calculator = () => {
     setOperator(nextOperator);
   };
 
-  const handleKeyDown = event => {
+  const handleKeyDown = (event: KeyboardEvent) => {
     let { key } = event;
-    if (key === 'Enter') key = '=';
+    if (key === "Enter") key = "=";
 
     switch (key) {
-      case CalculatorOperations[key]:
+      case "/":
+      case "*":
+      case "+":
+      case "-":
+      case "=":
         event.preventDefault();
         performOperation(key);
         break;
-      case '.':
+      case ".":
         event.preventDefault();
         inputDot();
         break;
-      case '%':
+      case "%":
         event.preventDefault();
         inputPercent();
         break;
-      case 'Backspace':
+      case "Backspace":
         event.preventDefault();
         clearLastChar();
         break;
-      case 'Clear':
+      case "Clear":
         event.preventDefault();
         clearDisplay();
         break;
@@ -108,14 +121,14 @@ const Calculator = () => {
   };
 
   useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown, false);
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown, false);
     };
   });
 
-  const clearDisplayCheck = displayValue !== '0';
-  const clearText = clearDisplayCheck ? 'C' : 'AC';
+  const clearDisplayCheck = displayValue !== "0";
+  const clearText = clearDisplayCheck ? "C" : "AC";
 
   return (
     <div className="calculator">
@@ -125,7 +138,8 @@ const Calculator = () => {
           <div className="function-keys">
             <CalculatorKey
               className="key-clear"
-              onPress={() => (clearDisplayCheck ? clearDisplay() : clearAll())}>
+              onPress={() => (clearDisplayCheck ? clearDisplay() : clearAll())}
+            >
               {clearText}
             </CalculatorKey>
             <CalculatorKey className="key-sign" onPress={() => toggleSign()}>
@@ -133,7 +147,8 @@ const Calculator = () => {
             </CalculatorKey>
             <CalculatorKey
               className="key-percent"
-              onPress={() => inputPercent()}>
+              onPress={() => inputPercent()}
+            >
               %
             </CalculatorKey>
           </div>
@@ -176,27 +191,32 @@ const Calculator = () => {
         <div className="operator-keys">
           <CalculatorKey
             className="key-divide"
-            onPress={() => performOperation('/')}>
+            onPress={() => performOperation("/")}
+          >
             ÷
           </CalculatorKey>
           <CalculatorKey
             className="key-multiply"
-            onPress={() => performOperation('*')}>
+            onPress={() => performOperation("*")}
+          >
             ×
           </CalculatorKey>
           <CalculatorKey
             className="key-subtract"
-            onPress={() => performOperation('-')}>
+            onPress={() => performOperation("-")}
+          >
             −
           </CalculatorKey>
           <CalculatorKey
             className="key-add"
-            onPress={() => performOperation('+')}>
+            onPress={() => performOperation("+")}
+          >
             +
           </CalculatorKey>
           <CalculatorKey
             className="key-equals"
-            onPress={() => performOperation('=')}>
+            onPress={() => performOperation("=")}
+          >
             =
           </CalculatorKey>
         </div>
